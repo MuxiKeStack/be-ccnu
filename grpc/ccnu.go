@@ -2,7 +2,7 @@ package grpc
 
 import (
 	"context"
-	"github.com/MuxiKeStack/be-api/gen/proto/ccnu"
+	ccnuv1 "github.com/MuxiKeStack/be-api/gen/proto/ccnu/v1"
 	"github.com/MuxiKeStack/be-ccnu/service"
 	"google.golang.org/grpc"
 )
