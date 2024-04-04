@@ -24,3 +24,8 @@ func (s *CCNUServiceServer) Login(ctx context.Context, request *ccnuv1.LoginRequ
 	success, err := s.ccnu.Login(ctx, request.GetStudentId(), request.GetPassword())
 	return &ccnuv1.LoginResponse{Success: success}, err
 }
+
+func (s *CCNUServiceServer) CourseList(ctx context.Context, request *ccnuv1.CourseListRequest) (*ccnuv1.CourseListResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
