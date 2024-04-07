@@ -26,7 +26,8 @@ type OriginalCourseItem struct {
 	Xqmc   string `json:"xqmc" binding:"required"` // 学期名称，如 1/2/3
 	Kkxymc string `json:"kkxymc"`                  // 开课学院
 	// Kclbmc string `json:"kclbmc"`                  // 课程类别名称，如公共课/专业课
-	// Kcxzmc string `json:"kcxzmc"`                  // 课程性质，如专业主干课程/通识必修课
+	Kcxzmc string `json:"kcxzmc"` // 课程性质，如专业主干课程/通识必修课
+	Xf     string `json:"xf"`
 }
 
 // GetSelfCourseList 个人课程列表
@@ -37,12 +38,14 @@ func (c *ccnuService) GetSelfCourseList(ctx context.Context, studentId, password
 		return nil, err
 	}
 	return slice.Map(originalCourses.Items, func(idx int, src OriginalCourseItem) domain.Course {
+		credit, _ := strconv.ParseFloat(src.Xf, 10)
 		return domain.Course{
 			CourseId: src.Kch,
 			Name:     src.Kcmc,
 			Teacher:  c.getTeachersSqStrBySplitting(src.Jsxx),
-			Year:     src.Xnm,
-			Term:     src.Xqmc,
+			School:   src.Kkxymc,
+			Property: src.Kcxzmc,
+			Credit:   float32(credit),
 		}
 	}), nil
 }

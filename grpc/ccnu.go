@@ -33,11 +33,12 @@ func (s *CCNUServiceServer) CourseList(ctx context.Context, request *ccnuv1.Cour
 	return &ccnuv1.CourseListResponse{
 		Courses: slice.Map(courses, func(idx int, src domain.Course) *ccnuv1.Course {
 			return &ccnuv1.Course{
-				CourseId: src.CourseId,
-				Name:     src.Name,
-				Teacher:  src.Teacher,
-				Year:     src.Year,
-				Term:     src.Term,
+				CourseCode: src.CourseId,
+				Name:       src.Name,
+				Teacher:    src.Teacher,
+				School:     src.School,
+				Property:   src.Property,
+				Credit:     src.Credit,
 			}
 		}),
 	}, err
