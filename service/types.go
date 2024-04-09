@@ -9,6 +9,7 @@ import (
 type CCNUService interface {
 	Login(ctx context.Context, studentId string, password string) (bool, error)
 	GetSelfCourseList(ctx context.Context, studentId, password, year, term string) ([]domain.Course, error)
+	GetSelfGradeList(ctx context.Context, studentId, password, year, term string) ([]domain.Grade, error)
 }
 
 type ccnuService struct {
