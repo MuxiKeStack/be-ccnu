@@ -26,6 +26,7 @@ func InitGRPCxKratosServer(ccnuServer *grpc.CCNUServiceServer, ecli *clientv3.Cl
 	server := kgrpc.NewServer(
 		kgrpc.Address(cfg.Addr),
 		kgrpc.Middleware(recovery.Recovery()),
+		kgrpc.Timeout(10*time.Second), // TODO
 	)
 
 	ccnuServer.Register(server)
