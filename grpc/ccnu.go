@@ -28,18 +28,39 @@ func (s *CCNUServiceServer) Login(ctx context.Context, request *ccnuv1.LoginRequ
 }
 
 func (s *CCNUServiceServer) CourseList(ctx context.Context, request *ccnuv1.CourseListRequest) (*ccnuv1.CourseListResponse, error) {
-	courses, err := s.ccnu.GetSelfCourseList(ctx, request.GetStudentId(), request.GetPassword(),
-		request.GetYear(), request.GetTerm())
+	var courseVos []*ccnuv1.Course
+	// 利用成绩接口，或者老接口
+	if request.GetSource() == ccnuv1.Source_GradeApi {
+		grades, err := s.ccnu.GetSelfGradeList(ctx, request.GetStudentId(), request.GetPassword(),
+			request.GetYear(), request.GetTerm())
+		if err != nil {
+			return nil, err
+		}
+		courseVos = slice.Map(grades, func(idx int, src domain.Grade) *ccnuv1.Course {
+			return convertToCourseV(src.Course)
+		})
+	} else {
+		courses, err := s.ccnu.GetSelfCourseList(ctx, request.GetStudentId(), request.GetPassword(),
+			request.GetYear(), request.GetTerm())
+		if err != nil {
+			return nil, err
+		}
+		courseVos = slice.Map(courses, func(idx int, src domain.Course) *ccnuv1.Course {
+			return convertToCourseV(src)
+		})
+	}
 	return &ccnuv1.CourseListResponse{
-		Courses: slice.Map(courses, func(idx int, src domain.Course) *ccnuv1.Course {
-			return &ccnuv1.Course{
-				CourseCode: src.CourseId,
-				Name:       src.Name,
-				Teacher:    src.Teacher,
-				School:     src.School,
-				Property:   src.Property,
-				Credit:     src.Credit,
-			}
-		}),
-	}, err
+		Courses: courseVos,
+	}, nil
+}
+
+func convertToCourseV(c domain.Course) *ccnuv1.Course {
+	return &ccnuv1.Course{
+		CourseCode: c.CourseId,
+		Name:       c.Name,
+		Teacher:    c.Teacher,
+		School:     c.School,
+		Property:   c.Property,
+		Credit:     c.Credit,
+	}
 }
