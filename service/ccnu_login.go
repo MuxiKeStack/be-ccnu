@@ -2,6 +2,9 @@ package service
 
 import (
 	"context"
+	"errors"
+	ccnuv1 "github.com/MuxiKeStack/be-api/gen/proto/ccnu/v1"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -38,11 +41,19 @@ func (c *ccnuService) loginClient(ctx context.Context, studentId string, passwor
 	request, err := http.NewRequest("POST", "https://account.ccnu.edu.cn/cas/login;jsessionid="+params.JSESSIONID, strings.NewReader(v.Encode()))
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	request.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36")
+	request.WithContext(ctx)
 
 	client := c.client()
 	resp, err := client.Do(request)
-	if err != nil || len(resp.Header.Get("Set-Cookie")) == 0 {
+	if err != nil {
+		var opErr *net.OpError
+		if errors.As(err, &opErr) {
+			return nil, ccnuv1.ErrorNetworkToXkError("网络异常")
+		}
 		return nil, err
 	}
-	return client, err
+	if len(resp.Header.Get("Set-Cookie")) == 0 {
+		return nil, ccnuv1.ErrorInvalidSidOrPwd("学号或密码错误")
+	}
+	return client, nil
 }
