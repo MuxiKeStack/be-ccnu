@@ -46,6 +46,8 @@ func (c *ccnuService) GetSelfCourseList(ctx context.Context, studentId, password
 			School:   src.Kkxymc,
 			Property: src.Kcxzmc,
 			Credit:   float32(credit),
+			Year:     src.Xnm,
+			Term:     src.Xqmc,
 		}
 	}), nil
 }

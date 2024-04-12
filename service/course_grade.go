@@ -27,8 +27,8 @@ type GradeItem struct {
 	Xf     string `json:"xf"`     // 学分
 	Cj     string `json:"cj"`     // 成绩
 	JxbId  string `json:"jxb_id"`
-	Xnm    string `json:"xnm"` // 学年名
-	Xqm    string `json:"xqm"` // 学期名
+	Xnm    string `json:"xnm" binding:"required"`   // 学年名，如 2023
+	Xqmmc  string `json:"xqmmc" binding:"required"` // 学期名称，如 1/2/3
 }
 
 func (c *ccnuService) GetSelfGradeList(ctx context.Context, studentId, password, year, term string) ([]domain.Grade, error) {
@@ -94,11 +94,9 @@ func (c *ccnuService) GetSelfGradeList(ctx context.Context, studentId, password,
 				Credit:   float32(credit),
 			},
 			Total: float32(total),
-			Year:  year,
-			Term:  term,
+			Year:  src.Xnm,
+			Term:  src.Xqmmc,
 			JxbId: src.JxbId,
-			Xnm:   src.Xnm,
-			Xqm:   src.Xqm,
 		}
 	})
 	return res, nil

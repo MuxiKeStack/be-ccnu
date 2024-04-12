@@ -37,7 +37,10 @@ func (s *CCNUServiceServer) CourseList(ctx context.Context, request *ccnuv1.Cour
 			return nil, err
 		}
 		courseVos = slice.Map(grades, func(idx int, src domain.Grade) *ccnuv1.Course {
-			return convertToCourseV(src.Course)
+			courseV := convertToCourseV(src.Course)
+			courseV.Year = src.Year
+			courseV.Term = src.Term
+			return courseV
 		})
 	} else {
 		courses, err := s.ccnu.GetSelfCourseList(ctx, request.GetStudentId(), request.GetPassword(),
@@ -62,5 +65,7 @@ func convertToCourseV(c domain.Course) *ccnuv1.Course {
 		School:     c.School,
 		Property:   c.Property,
 		Credit:     c.Credit,
+		Year:       c.Year,
+		Term:       c.Term,
 	}
 }
