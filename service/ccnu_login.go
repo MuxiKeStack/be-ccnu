@@ -19,8 +19,12 @@ func (c *ccnuService) Login(ctx context.Context, studentId string, password stri
 func (c *ccnuService) client() *http.Client {
 	j, _ := cookiejar.New(&cookiejar.Options{})
 	return &http.Client{
-		Timeout: c.timeout,
+		Transport: nil,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return nil
+		},
 		Jar:     j,
+		Timeout: c.timeout,
 	}
 }
 

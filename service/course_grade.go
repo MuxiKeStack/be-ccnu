@@ -43,6 +43,7 @@ func (c *ccnuService) GetSelfGradeList(ctx context.Context, studentId, password,
 	formData := url.Values{}
 	formData.Set("xnm", year)          // 学年名
 	formData.Set("xqm", termMap[term]) // 学期名
+	formData.Set("kcbj", "")           //
 	formData.Set("_search", "false")
 	formData.Set("nd", string(time.Now().UnixNano()))
 	formData.Set("queryModel.showCount", "1000")
@@ -51,7 +52,7 @@ func (c *ccnuService) GetSelfGradeList(ctx context.Context, studentId, password,
 	formData.Set("queryModel.sortOrder", "asc")
 	formData.Set("time", "5")
 
-	requestUrl := "http://xk.ccnu.edu.cn/jwglxt/cjcx/cjcx_cxXsgrcj.html?doType=query&gnmkdm=N305005"
+	requestUrl := "https://xk.ccnu.edu.cn/jwglxt/cjcx/cjcx_cxXsgrcj.html?doType=query&gnmkdm=N305005"
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(formData.Encode()))
 	if err != nil {
 		return nil, err
