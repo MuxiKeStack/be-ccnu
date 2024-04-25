@@ -57,6 +57,15 @@ func (s *CCNUServiceServer) CourseList(ctx context.Context, request *ccnuv1.Cour
 	}, nil
 }
 
+func (s *CCNUServiceServer) GetAllGrades(ctx context.Context, request *ccnuv1.GetAllGradesRequest) (*ccnuv1.GetAllGradesResponse, error) {
+	grades, err := s.ccnu.GetDetailOfGradeList(ctx, request.GetStudentId(), request.GetPassword(), "", "")
+	return &ccnuv1.GetAllGradesResponse{
+		Grades: slice.Map(grades, func(idx int, src domain.Grade) *ccnuv1.Grade {
+			return convertToGradeV(src)
+		}),
+	}, err
+}
+
 func convertToCourseV(c domain.Course) *ccnuv1.Course {
 	return &ccnuv1.Course{
 		CourseCode: c.CourseId,
@@ -67,5 +76,18 @@ func convertToCourseV(c domain.Course) *ccnuv1.Course {
 		Credit:     c.Credit,
 		Year:       c.Year,
 		Term:       c.Term,
+	}
+}
+
+func convertToGradeV(g domain.Grade) *ccnuv1.Grade {
+	return &ccnuv1.Grade{
+		CourseCode:    g.Course.CourseId,
+		CourseName:    g.Course.Name,
+		CourseTeacher: g.Course.Teacher,
+		Regular:       g.Regular,
+		Final:         g.Final,
+		Total:         g.Total,
+		Year:          g.Year,
+		Term:          g.Term,
 	}
 }

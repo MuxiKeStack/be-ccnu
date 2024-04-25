@@ -61,3 +61,19 @@ func (c *ccnuService) loginClient(ctx context.Context, studentId string, passwor
 	}
 	return client, nil
 }
+
+type ClientKey struct{} // 用于 context 的键
+
+// 将 http.Client 添加到 context 中
+func (c *ccnuService) addClientToContext(ctx context.Context, client *http.Client) context.Context {
+	return context.WithValue(ctx, ClientKey{}, client)
+}
+
+// 从 context 中获取 http.Client
+func (c *ccnuService) getClientFromContext(ctx context.Context) *http.Client {
+	client, ok := ctx.Value(ClientKey{}).(*http.Client)
+	if !ok {
+		return nil // 这里可以处理默认逻辑或错误
+	}
+	return client
+}

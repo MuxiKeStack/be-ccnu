@@ -16,10 +16,10 @@ import (
 // Injectors from wire.go:
 
 func InitGRPCServer() grpcx.Server {
-	ccnuService := service.NewCCNUService()
+	logger := ioc.InitLogger()
+	ccnuService := service.NewCCNUService(logger)
 	ccnuServiceServer := grpc.NewCCNUServiceServer(ccnuService)
 	client := ioc.InitEtcdClient()
-	logger := ioc.InitLogger()
 	server := ioc.InitGRPCxKratosServer(ccnuServiceServer, client, logger)
 	return server
 }

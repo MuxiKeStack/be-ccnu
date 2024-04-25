@@ -45,7 +45,7 @@ func (c *ccnuService) GetSelfCourseList(ctx context.Context, studentId, password
 			Teacher:  c.getTeachersSqStrBySplitting(src.Jsxx),
 			School:   src.Kkxymc,
 			Property: src.Kcxzmc,
-			Credit:   float32(credit),
+			Credit:   credit,
 			Year:     src.Xnm,
 			Term:     src.Xqmc,
 		}

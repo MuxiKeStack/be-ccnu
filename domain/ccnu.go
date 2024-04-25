@@ -6,16 +6,16 @@ type Course struct {
 	Teacher  string `json:"teacher"`
 	School   string // 开课学院
 	Property string
-	Credit   float32
+	Credit   float64
 	Year     string
 	Term     string
 }
 
 type Grade struct {
 	Course  Course
-	Regular float32
-	Final   float32
-	Total   float32
+	Regular float64
+	Final   float64
+	Total   float64
 	// 下面三个字段和Course中的School可用于进一步查询平时分的期末分
 	Year  string
 	Term  string
