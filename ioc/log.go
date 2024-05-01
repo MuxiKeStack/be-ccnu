@@ -12,7 +12,7 @@ func InitLogger() logger.Logger {
 	// 配置Lumberjack以支持日志文件的滚动
 	lumberjackLogger := &lumberjack.Logger{
 		// 注意有没有权限
-		Filename:   "/var/log/user.log", // 指定日志文件路径
+		Filename:   "/var/log/ccnu.log", // 指定日志文件路径
 		MaxSize:    50,                  // 每个日志文件的最大大小，单位：MB
 		MaxBackups: 3,                   // 保留旧日志文件的最大个数
 		MaxAge:     28,                  // 保留旧日志文件的最大天数
