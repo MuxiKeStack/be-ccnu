@@ -2,8 +2,8 @@ package grpcx
 
 import (
 	"context"
-	"github.com/MuxiKeStack/be-user/pkg/logger"
-	"github.com/MuxiKeStack/be-user/pkg/netx"
+	"github.com/MuxiKeStack/be-ccnu/pkg/logger"
+	"github.com/MuxiKeStack/be-ccnu/pkg/netx"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/client/v3/naming/endpoints"
 	"google.golang.org/grpc"
