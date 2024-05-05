@@ -4,6 +4,7 @@ type Course struct {
 	CourseId string `json:"course_id"`
 	Name     string `json:"name"`
 	Teacher  string `json:"teacher"`
+	Class    string
 	School   string // 开课学院
 	Property string
 	Credit   float64

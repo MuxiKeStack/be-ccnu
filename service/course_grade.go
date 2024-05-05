@@ -28,6 +28,7 @@ type GradeItem struct {
 	Xf     string `json:"xf"`     // 学分
 	Cj     string `json:"cj"`     // 成绩
 	JxbId  string `json:"jxb_id"`
+	Jxbmc  string `json:"jxbmc"`
 	Xnm    string `json:"xnm" binding:"required"`   // 学年名，如 2023
 	Xqmmc  string `json:"xqmmc" binding:"required"` // 学期名称，如 1/2/3
 }
@@ -95,6 +96,7 @@ func (c *ccnuService) GetSelfGradeList(ctx context.Context, studentId, password,
 				CourseId: src.Kch,
 				Name:     src.Kcmc,
 				Teacher:  src.Jsxm,
+				Class:    src.Jxbmc,
 				School:   src.Kkbmmc,
 				Property: src.Kcxzmc,
 				Credit:   credit,

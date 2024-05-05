@@ -71,6 +71,7 @@ func convertToCourseV(c domain.Course) *ccnuv1.Course {
 		CourseCode: c.CourseId,
 		Name:       c.Name,
 		Teacher:    c.Teacher,
+		Class:      c.Class,
 		School:     c.School,
 		Property:   c.Property,
 		Credit:     c.Credit,
