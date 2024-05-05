@@ -65,31 +65,7 @@ func (c *ccnuService) getTeachersSqStrBySplitting(s string) string {
 
 // getSelfCoursesFromXK 获取个人已上过的课程（教务系统原生结果）
 func (c *ccnuService) getSelfCoursesFromXK(ctx context.Context, studentId, password string, year, term string) (OriginalCourses, error) {
-	courses, err := c.makeCoursesGetRequest(ctx, studentId, password, year, term)
-	if err != nil {
-		return OriginalCourses{}, err
-	}
-
-	// 排除选课期间刚选的课
-	if courses.Items != nil {
-		var list []OriginalCourseItem
-		m := "0"
-		switch true {
-		case time.Now().Month() > 5 && time.Now().Month() < 10:
-			m = "1"
-		case time.Now().Month() < 4 || time.Now().Month() > 11:
-			m = "2"
-		}
-
-		for i := range courses.Items {
-			if courses.Items[i].Xnm != strconv.Itoa(time.Now().Year()) || courses.Items[i].Xqmc != m {
-				list = append(list, courses.Items[i])
-			}
-		}
-		courses.Items = list
-	}
-
-	return courses, nil
+	return c.makeCoursesGetRequest(ctx, studentId, password, year, term)
 }
 
 // makeCoursesGetRequest 请求获取课程列表
