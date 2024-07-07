@@ -57,9 +57,19 @@ func (s *CCNUServiceServer) CourseList(ctx context.Context, request *ccnuv1.Cour
 	}, nil
 }
 
+// todo: 修改Grade服务，废弃该方法，使用GetGrades代替
 func (s *CCNUServiceServer) GetAllGrades(ctx context.Context, request *ccnuv1.GetAllGradesRequest) (*ccnuv1.GetAllGradesResponse, error) {
 	grades, err := s.ccnu.GetDetailOfGradeList(ctx, request.GetStudentId(), request.GetPassword(), "", "")
 	return &ccnuv1.GetAllGradesResponse{
+		Grades: slice.Map(grades, func(idx int, src domain.Grade) *ccnuv1.Grade {
+			return convertToGradeV(src)
+		}),
+	}, err
+}
+
+func (s *CCNUServiceServer) GetGrades(ctx context.Context, request *ccnuv1.GetGradesRequest) (*ccnuv1.GetGradesResponse, error) {
+	grades, err := s.ccnu.GetDetailOfGradeList(ctx, request.GetStudentId(), request.GetPassword(), request.GetYear(), request.GetYear())
+	return &ccnuv1.GetGradesResponse{
 		Grades: slice.Map(grades, func(idx int, src domain.Grade) *ccnuv1.Grade {
 			return convertToGradeV(src)
 		}),
