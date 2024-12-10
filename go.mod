@@ -8,6 +8,7 @@ require (
 	github.com/go-kratos/kratos/contrib/registry/etcd/v2 v2.0.0-20240430092255-be624d035565
 	github.com/go-kratos/kratos/v2 v2.7.3
 	github.com/google/wire v0.6.0
+	github.com/robertkrimen/otto v0.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.18.2
 	go.etcd.io/etcd/client/v3 v3.5.13
@@ -44,10 +45,10 @@ require (
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/genproto v0.0.0-20240429193739-8cf5692501f6 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240429193739-8cf5692501f6 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240429193739-8cf5692501f6 // indirect
 	google.golang.org/protobuf v1.34.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/sourcemap.v1 v1.0.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -15,6 +15,7 @@ func InitGRPCServer() grpcx.Server {
 		ioc.InitGRPCxKratosServer,
 		grpc.NewCCNUServiceServer,
 		service.NewCCNUService,
+		ioc.InitVM,
 		ioc.InitLogger,
 		ioc.InitEtcdClient,
 	)

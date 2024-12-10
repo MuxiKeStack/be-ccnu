@@ -17,7 +17,8 @@ import (
 
 func InitGRPCServer() grpcx.Server {
 	logger := ioc.InitLogger()
-	ccnuService := service.NewCCNUService(logger)
+	otto := ioc.InitVM()
+	ccnuService := service.NewCCNUService(logger, otto)
 	ccnuServiceServer := grpc.NewCCNUServiceServer(ccnuService)
 	client := ioc.InitEtcdClient()
 	server := ioc.InitGRPCxKratosServer(ccnuServiceServer, client, logger)

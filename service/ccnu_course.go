@@ -120,7 +120,7 @@ func (c *ccnuService) makeCoursesGetRequest(ctx context.Context, studentId, pass
 
 // xkLoginClient 教务系统模拟登录
 func (c *ccnuService) xkLoginClient(ctx context.Context, studentId string, password string) (*http.Client, error) {
-	client, err := c.loginClient(ctx, studentId, password)
+	client, err := c.loginUndergraduateClient(ctx, studentId, password)
 	if err != nil {
 		return nil, err
 	}

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/MuxiKeStack/be-ccnu/domain"
 	"github.com/MuxiKeStack/be-ccnu/pkg/logger"
+	"github.com/robertkrimen/otto"
 	"time"
 )
 
@@ -18,10 +19,11 @@ type CCNUService interface {
 
 type ccnuService struct {
 	timeout time.Duration
+	vm      *otto.Otto
 	l       logger.Logger
 }
 
-func NewCCNUService(l logger.Logger) CCNUService {
+func NewCCNUService(l logger.Logger, vm *otto.Otto) CCNUService {
 	return &ccnuService{
 		timeout: time.Second * 5,
 		l:       l,
