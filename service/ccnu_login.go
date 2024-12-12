@@ -21,12 +21,12 @@ func (c *ccnuService) Login(ctx context.Context, studentId string, password stri
 		client *http.Client
 		err    error
 	)
-	if len(studentId) > 5 && studentId[4] == '2' {
-		// 本科生
-		client, err = c.loginUndergraduateClient(ctx, studentId, password)
-	} else {
-		client, err = c.loginPostgraduateClient(ctx, studentId, password)
-	}
+	//if len(studentId) > 5 && studentId[4] == '2' {
+	// 本科生
+	client, err = c.loginUndergraduateClient(ctx, studentId, password)
+	//} else {
+	//	client, err = c.loginPostgraduateClient(ctx, studentId, password)
+	//}
 	return client != nil, err
 }
 
